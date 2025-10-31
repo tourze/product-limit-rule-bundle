@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  # DataFixtures services (only in test environment)
+  Tourze\ProductLimitRuleBundle\DataFixtures\:
+    resource: '../../DataFixtures/'

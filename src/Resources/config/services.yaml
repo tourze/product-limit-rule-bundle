@@ -1,0 +1,31 @@
+services:
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    public: false
+
+  Tourze\ProductLimitRuleBundle\Repository\:
+    resource: '../../Repository/'
+    public: true
+  
+  # Explicit repository definitions for autowiring
+  Tourze\ProductLimitRuleBundle\Repository\SpuLimitRuleRepository:
+    public: true
+    
+  Tourze\ProductLimitRuleBundle\Repository\SkuLimitRuleRepository:
+    public: true
+    
+  Tourze\ProductLimitRuleBundle\Repository\CategoryLimitRuleRepository:
+    public: true
+
+  # Controller services
+  Tourze\ProductLimitRuleBundle\Controller\:
+    resource: '../../Controller/'
+    tags: ['controller.service_arguments']
+
+  # Service services
+  Tourze\ProductLimitRuleBundle\Service\:
+    resource: '../../Service/'
+    public: true
+
