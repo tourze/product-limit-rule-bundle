@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tourze\ProductLimitRuleBundle\Entity;
 
+use BizUserBundle\Entity\BizUser;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Tourze\DoctrineIndexedBundle\Attribute\IndexColumn;
 use Tourze\DoctrineTimestampBundle\Traits\TimestampableAware;
@@ -48,9 +48,9 @@ class CategoryLimitRule implements \Stringable
     private ?string $remark = null;
 
     #[UpdateUserColumn]
-    #[ORM\ManyToOne(targetEntity: UserInterface::class)]
+    #[ORM\ManyToOne(targetEntity: BizUser::class)]
     #[ORM\JoinColumn(name: 'update_user', referencedColumnName: 'id', nullable: true)]
-    private ?UserInterface $updateUser = null;
+    private ?BizUser $updateUser = null;
 
     public function getId(): ?int
     {
@@ -97,12 +97,12 @@ class CategoryLimitRule implements \Stringable
         $this->remark = $remark;
     }
 
-    public function getUpdateUser(): ?UserInterface
+    public function getUpdateUser(): ?BizUser
     {
         return $this->updateUser;
     }
 
-    public function setUpdateUser(?UserInterface $updateUser): void
+    public function setUpdateUser(?BizUser $updateUser): void
     {
         $this->updateUser = $updateUser;
     }
