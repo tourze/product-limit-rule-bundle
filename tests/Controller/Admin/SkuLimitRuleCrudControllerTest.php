@@ -94,9 +94,7 @@ class SkuLimitRuleCrudControllerTest extends AbstractEasyAdminControllerTestCase
 
     public function testValidationErrors(): void
     {
-        $client = self::createClientWithDatabase();
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = self::createAuthenticatedClient();
 
         // 测试必填字段验证 - skuId 为空时应该失败
         $entity = new SkuLimitRule();

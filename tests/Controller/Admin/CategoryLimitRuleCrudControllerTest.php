@@ -99,9 +99,7 @@ class CategoryLimitRuleCrudControllerTest extends AbstractEasyAdminControllerTes
     {
         // 避免依赖完整数据库配置，直接测试验证器逻辑
         try {
-            $client = self::createClientWithDatabase();
-            $this->createAdminUser('admin@test.com', 'password');
-            $this->loginAsAdmin($client, 'admin@test.com', 'password');
+            $client = self::createAuthenticatedClient();
 
             // 测试 EasyAdmin 表单验证 - categoryId 为空时应该失败
             try {

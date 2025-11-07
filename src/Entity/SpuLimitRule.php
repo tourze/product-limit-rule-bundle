@@ -12,7 +12,6 @@ use Tourze\Arrayable\AdminArrayInterface;
 use Tourze\DoctrineIpBundle\Traits\CreatedFromIpAware;
 use Tourze\DoctrineSnowflakeBundle\Traits\SnowflakeKeyAware;
 use Tourze\DoctrineTimestampBundle\Traits\TimestampableAware;
-use Tourze\DoctrineUserBundle\Traits\BlameableAware;
 use Tourze\ProductLimitRuleBundle\Enum\SpuLimitType;
 use Tourze\ProductLimitRuleBundle\Repository\SpuLimitRuleRepository;
 
@@ -24,10 +23,21 @@ use Tourze\ProductLimitRuleBundle\Repository\SpuLimitRuleRepository;
 #[ORM\UniqueConstraint(name: 'product_spu_limit_rule_idx_unique', columns: ['spu_id', 'type'])]
 class SpuLimitRule implements \Stringable, AdminArrayInterface
 {
-    use BlameableAware;
     use TimestampableAware;
     use SnowflakeKeyAware;
     use CreatedFromIpAware;
+
+    /**
+     * 创建人
+     */
+    #[ORM\Column(nullable: true, options: ['comment' => '创建人'])]
+    private ?string $createdBy = null;
+
+    /**
+     * 更新人
+     */
+    #[ORM\Column(nullable: true, options: ['comment' => '更新人'])]
+    private ?string $updatedBy = null;
 
     #[Ignore]
     #[Assert\NotBlank(message: 'SPU ID 不能为空')]
@@ -80,6 +90,26 @@ class SpuLimitRule implements \Stringable, AdminArrayInterface
     public function setSpuId(string $spuId): void
     {
         $this->spuId = $spuId;
+    }
+
+    public function getCreatedBy(): ?string
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?string $createdBy): void
+    {
+        $this->createdBy = $createdBy;
+    }
+
+    public function getUpdatedBy(): ?string
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?string $updatedBy): void
+    {
+        $this->updatedBy = $updatedBy;
     }
 
     /**

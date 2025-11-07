@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Tourze\ProductLimitRuleBundle\Entity;
 
-use BizUserBundle\Entity\BizUser;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Tourze\DoctrineIndexedBundle\Attribute\IndexColumn;
 use Tourze\DoctrineTimestampBundle\Traits\TimestampableAware;
-use Tourze\DoctrineUserBundle\Attribute\UpdateUserColumn;
-use Tourze\DoctrineUserBundle\Traits\CreateUserAware;
 use Tourze\ProductLimitRuleBundle\Enum\CategoryLimitType;
 use Tourze\ProductLimitRuleBundle\Repository\CategoryLimitRuleRepository;
 
@@ -20,12 +17,23 @@ use Tourze\ProductLimitRuleBundle\Repository\CategoryLimitRuleRepository;
 class CategoryLimitRule implements \Stringable
 {
     use TimestampableAware;
-    use CreateUserAware;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER, options: ['comment' => '主键ID'])]
     private ?int $id = null;
+
+    /**
+     * 创建人
+     */
+    #[ORM\Column(nullable: true, options: ['comment' => '创建人'])]
+    private ?string $createdBy = null;
+
+    /**
+     * 更新人
+     */
+    #[ORM\Column(nullable: true, options: ['comment' => '更新人'])]
+    private ?string $updatedBy = null;
 
     #[IndexColumn]
     #[ORM\Column(type: Types::STRING, length: 40, nullable: false, options: ['comment' => '分类ID'])]
@@ -46,11 +54,6 @@ class CategoryLimitRule implements \Stringable
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true, options: ['comment' => '备注'])]
     #[Assert\Length(max: 255)]
     private ?string $remark = null;
-
-    #[UpdateUserColumn]
-    #[ORM\ManyToOne(targetEntity: BizUser::class)]
-    #[ORM\JoinColumn(name: 'update_user', referencedColumnName: 'id', nullable: true)]
-    private ?BizUser $updateUser = null;
 
     public function getId(): ?int
     {
@@ -97,14 +100,24 @@ class CategoryLimitRule implements \Stringable
         $this->remark = $remark;
     }
 
-    public function getUpdateUser(): ?BizUser
+    public function getCreatedBy(): ?string
     {
-        return $this->updateUser;
+        return $this->createdBy;
     }
 
-    public function setUpdateUser(?BizUser $updateUser): void
+    public function setCreatedBy(?string $createdBy): void
     {
-        $this->updateUser = $updateUser;
+        $this->createdBy = $createdBy;
+    }
+
+    public function getUpdatedBy(): ?string
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?string $updatedBy): void
+    {
+        $this->updatedBy = $updatedBy;
     }
 
     public function __toString(): string

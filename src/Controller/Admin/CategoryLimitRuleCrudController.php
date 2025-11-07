@@ -63,8 +63,8 @@ final class CategoryLimitRuleCrudController extends AbstractCrudController
         ;
         yield TextField::new('value', '限制值');
         yield TextField::new('remark', '备注');
-        yield AssociationField::new('createUser', '创建用户');
-        yield AssociationField::new('updateUser', '更新用户');
+        yield TextField::new('createdBy', '创建用户');
+        yield TextField::new('updatedBy', '更新用户');
         yield DateTimeField::new('createTime', '创建时间')->hideOnForm();
         yield DateTimeField::new('updateTime', '更新时间')->hideOnForm();
     }
@@ -88,8 +88,8 @@ final class CategoryLimitRuleCrudController extends AbstractCrudController
             ->add(ChoiceFilter::new('type', '限制类型')->setChoices($typeChoices))
             ->add(TextFilter::new('value', '限制值'))
             ->add(TextFilter::new('remark', '备注'))
-            ->add(EntityFilter::new('createUser', '创建用户'))
-            ->add(EntityFilter::new('updateUser', '更新用户'))
+            ->add(TextFilter::new('createdBy', '创建用户'))
+            ->add(TextFilter::new('updatedBy', '更新用户'))
         ;
     }
 }
